@@ -9,14 +9,14 @@ Gem::Specification.new do |s|
   s.authors     = ["Avinash Padmanabhan"]
   s.email       = ['avinashpadmanabhan@gmail.com']
   s.files       = `git ls-files`.split("\n")
-	s.test_files  = ['spec/acop_spec.rb']
+  s.test_files  = ['spec/acop_spec.rb']
   s.homepage    = "https://github.com/eveningsamurai/acop"
 
-	s.add_development_dependency "OptionParser"
-	s.add_development_dependency "rspec"
-	s.require_paths = ["lib"]
+  s.add_development_dependency "OptionParser"
+  s.add_development_dependency "rspec"
+  s.require_paths = ["lib"]
 
-	s.executables << 'acop'
+  s.executables << 'acop'
 
-	s.post_install_message = "Thanks for installing Accessibility Cop(acop)!"
+  s.post_install_message = "Thanks for installing Accessibility Cop(acop)!"
 end

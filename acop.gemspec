@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "OptionParser"
   s.add_development_dependency "rspec"
   s.add_development_dependency "nokogiri"
+  s.add_development_dependency "webmock"
   s.require_paths = ["lib"]
 
   s.executables << 'acop'

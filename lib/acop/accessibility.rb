@@ -4,12 +4,9 @@ require 'nokogiri'
 module Acop
 	class Enforcer
 		def initialize(options={})
-			@contents = html_source(options[:url])
-		end
-
-		def html_source(url)
-			url = "http://" + url unless url.include?("http")
-			Nokogiri::HTML(open(url))
+			url = options[:url]
+			url = "http://" + options[:url] unless options[:url].include?("http")
+			@contents = Nokogiri::HTML(open(url))
 		end
 
 		def accessibility_checks
@@ -22,21 +19,21 @@ module Acop
 			puts error_messages
 		end
 
-		def check_image_input_alt
-			input_elements = @contents.css('input')
+		def check_image_input_alt(source=@contents)
+			input_elements = source.css('input')
 			image_inputs   = input_elements.select {|image_input| image_input['type'] =~ /image/i}
 			error_messages = []
 			image_inputs.each do |input|
-				error_messages.push("Missing alt text/attribute for image button with id/name: " + input['name'] || input['id'] || "") unless alt_empty_or_nil(input)
+				error_messages.push("Missing alt text/attribute for image button with id/name: " + (input['name'] || input['id'] || "")) if alt_empty_or_nil(input)
 			end
 			error_messages
 		end
 
-		def check_image_alt
-			image_elements = @contents.css('img')
+		def check_image_alt(source=@contents)
+			image_elements = source.css('img')
 			error_messages = []
 			image_elements.each do |element|
-				error_messages.push("Missing alt text/attribute for image with src: " + element['src']) unless alt_empty_or_nil(element)
+				error_messages.push("Missing alt text/attribute for image with src: " + element['src']) if alt_empty_or_nil(element)
 			end
 			error_messages
 		end

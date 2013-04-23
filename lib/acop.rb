@@ -1,5 +1,6 @@
 require 'optparse'
 require 'open-uri'
+require_relative 'acop/accessibility.rb'
 
 module Acop
    def self.run(*args)
@@ -23,6 +24,8 @@ module Acop
 			puts option_parser
 			exit -1
 		end
+
+		Enforcer.new(options).accessibility_checks
 	end
 
    def self.valid_url?(url)

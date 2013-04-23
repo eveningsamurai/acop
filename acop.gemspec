@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "OptionParser"
   s.add_development_dependency "rspec"
+  s.add_development_dependency "nokogiri"
   s.require_paths = ["lib"]
 
   s.executables << 'acop'

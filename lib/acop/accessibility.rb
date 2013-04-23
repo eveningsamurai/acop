@@ -38,6 +38,18 @@ module Acop
 			error_messages
 		end
 
+		def check_image_links(source=@contents)
+			link_elements = source.css('a img')
+			error_messages = []
+			image_links = []
+			link_elements.each do |link_element|
+				if(link_element['alt'] != "")
+					error_messages.push("Alt Text not empty or nil for image link with src: " + link_element['src'])
+				end
+			end
+			error_messages
+		end
+
 		def alt_empty_or_nil(element)
 			if(element['alt'] == nil || element['alt'] == "")
 				return true

@@ -49,5 +49,36 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Missing alt text/attribute for image with src")
 		end
+
+		it "should return error messages when alt tags absent from image links" do
+			stub_request(:any, "www.example.com").to_return(:body => "<html><body><img src='www.intuit.com'></body></html>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_image_alt
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing alt text/attribute for image with src")
+		end
+
+		it "should have alt tags empty in image links" do
+			stub_request(:any, "www.example.com").to_return(:body => "<a class='visually-hidden'><img id='img_link' src='\/try_qbo_free.png' alt=''/>Try QuickBooks Online for Free</a>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_image_links
+			error_messages.should be_empty
+		end
+
+		it "should return error messages when alt tags not empty in image links" do
+			stub_request(:any, "www.example.com").to_return(:body => "<a class='visually-hidden'><img id='img_link' src='\/try_qbo_free.png' alt='bla bla'/>Try QuickBooks Online for Free</a>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_image_links
+			error_messages.should_not be_empty
+			error_messages[0].should match("Alt Text not empty or nil for image link with src")
+		end
+
+		it "should return error messages when alt tags nil in image links" do
+			stub_request(:any, "www.example.com").to_return(:body => "<a class='visually-hidden'><img id='img_link' src='\/try_qbo_free.png' alt='bla bla'/>Try QuickBooks Online for Free</a>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_image_links
+			error_messages.should_not be_empty
+			error_messages[0].should match("Alt Text not empty or nil for image link with src")
+		end
 	end
 end

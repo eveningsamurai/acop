@@ -23,7 +23,8 @@ Access the command line help
 Specify the url you want accessibility tested
 
 `acop -u www.google.com`  
-`acop -u http://www.intuit.com`
+
+(Currently looking for input elements of type image and img elements)
 
 Bugs
 ----

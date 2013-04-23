@@ -27,8 +27,8 @@ module Acop
 			image_inputs   = input_elements.select {|image_input| image_input['type'] =~ /image/i}
 			error_messages = []
 			image_inputs.each do |input|
-				error_messages.push("Missing alt attribute for image button with id/name: " + input['name'] || input['id'] || "") unless input['element']
-				error_messages.push("Missing alt text for image button with id/name " + input['name'] || input['id'] || "") if input['element'] == ""
+				error_messages.push("Missing alt attribute for image button with id/name: " + input['name'] || input['id'] || "") unless input['alt']
+				error_messages.push("Missing alt text for image button with id/name " + input['name'] || input['id'] || "") if input['alt'] == ""
 			end
 			error_messages
 		end

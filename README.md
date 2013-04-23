@@ -22,7 +22,7 @@ Access the command line help
 
 Specify the url you want accessibility tested
 
-`acop -u www.google.com`
+`acop -u www.google.com`  
 `acop -u http://www.intuit.com`
 
 Bugs

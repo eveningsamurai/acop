@@ -31,6 +31,7 @@ Accessibility for Images
 *Image elements should have alt attributes
 *Image elements should not have alt attributes empty
 
+`<a><img...`
 `acop -u http://quickbooks.intuit.com/credit-card-service`  
 	Missing alt text/attribute for image with src: /qb/categories/pos/images/blue_curve_with_phone_number.png
 	Missing alt text/attribute for image with src: /qb/products/pos/pos_accept_cards/images/pos_gift_card.png

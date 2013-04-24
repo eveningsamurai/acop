@@ -22,7 +22,18 @@ Access the command line help
 
 Specify the url you want accessibility tested
 
-`acop -u www.google.com`  
+Accessibility for Images
+`<input type='image'...`
+*Image inputs elements should have alt attributes
+*Image inputs elements should not have alt attributes empty
+
+`<img...`
+*Image elements should have alt attributes
+*Image elements should not have alt attributes empty
+
+`acop -u http://quickbooks.intuit.com/credit-card-service`  
+	Missing alt text/attribute for image with src: /qb/categories/pos/images/blue_curve_with_phone_number.png
+	Missing alt text/attribute for image with src: /qb/products/pos/pos_accept_cards/images/pos_gift_card.png
 
 (Currently looking for input elements of type image and img elements)
 

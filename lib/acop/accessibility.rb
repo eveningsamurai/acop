@@ -3,7 +3,7 @@ require 'nokogiri'
 
 module Acop
 	class Enforcer
-		attr_writer :ah
+		attr_reader :ah
 
 		def initialize(options={})
 			@ah = Helpers.new
@@ -60,14 +60,17 @@ module Acop
 		def check_page_title(source=@contents)
 			title_element = source.css('title')
 			error_messages = []
-			error_messages.push("Missing title element") unless title_element.first['title']
-			error_messages.push("Empty title element") if title_element.first['title'] == ""
+			error_messages.push("Missing title element") if title_element.empty?
+			error_messages.push("Empty title element") if(title_element.first and title_element.first.text == "")
+			error_messages.push("More than 1 title element") if title_element.length > 1
+
 			error_messages
 		end
 
 		def check_frame_title(source=@contents)
 			return [] if source.css("frameset").length < 1
 			frame_elements = source.css("frame")
+			error_messages = []
 			frame_elements.each do |frame|
 				error_messages.push("Missing frame title element") unless frame['title']
 				error_messages.push("Empty frame title element") if frame['title'] == ""

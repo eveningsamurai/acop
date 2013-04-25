@@ -58,6 +58,11 @@ Checkpoints
 *   iFrame elements should have title attributes  
 *   iFrame elements should not have title attributes empty  
 
+### Area
+`<area shape='rect' coords='0,0,82,126' href='sun.htm' alt='Sun'>`  
+*   Area elements should have an alt attribute  
+*   Area element alt attribute cannot be empty
+
 Bugs
 ----
 Report bugs and requests at [the Github page](https://github.com/eveningsamurai/acop).

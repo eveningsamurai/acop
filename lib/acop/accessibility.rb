@@ -58,6 +58,17 @@ module Acop
 			end
 			error_messages
 		end
+		
+		def check_areas(source=@contents)
+			area_elements = source.css("area")
+			error_messages = []
+			area_elements.each do |element|
+				if (@ah.attribute_empty_or_nil(element, "alt"))
+					error_messages.push("Missing alt text/attribute for area element with id/name: " + (element['name'] || element['id'] || ""))
+				end
+			end
+			error_messages
+		end
 
 		def check_page_title(source=@contents)
 			title_element = source.css('title')

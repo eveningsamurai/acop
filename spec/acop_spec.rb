@@ -81,6 +81,29 @@ RSpec.configure do |config|
 			error_messages[0].should match("Alt Text not empty or nil for image link with src")
 		end
 
+		it "should return error messages when alt tags not present in area elements" do
+			stub_request(:any, "www.example.com").to_return(:body => "<area shape='rect' coords='0,0,82,126' href='sun.htm'>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_areas
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing alt text/attribute for area element")
+		end
+
+		it "should return error messages when alt tags empty in area elements" do
+			stub_request(:any, "www.example.com").to_return(:body => "<area shape='rect' coords='0,0,82,126' href='sun.htm' alt=''>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_areas
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing alt text/attribute for area element")
+		end
+
+		it "should not return error messages when alt tags present in area elements" do
+			stub_request(:any, "www.example.com").to_return(:body => "<area shape='rect' coords='0,0,82,126' href='sun.htm' alt='Sun'>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_areas
+			error_messages.should be_empty
+		end
+
 		it "should return error messages when title not present" do
 			stub_request(:any, "www.example.com").to_return(:body => "<html><head></head></html>", :status => 200)
 			enf = Acop::Enforcer.new({:url => "www.example.com"})

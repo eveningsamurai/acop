@@ -42,9 +42,16 @@ Checkpoints
 `<title></title>`  
 *   Page title element should not be empty  
 
+`<!DOCTYPE Resource SYSTEM 'foo.dtd'>`
+*   doctype should be specified if frame or iframe elements exist on the page
+
 `<frameset><frame title=""...`  
-*   Frame title elements should have alt attributes  
-*   Frame title elements should not have alt attributes empty  
+*   Frame elements should have title attributes  
+*   Frame elements should not have title attributes empty  
+
+`<iframe title=""...`
+*   iFrame elements should have title attributes  
+*   iFrame elements should not have title attributes empty  
 
 Bugs
 ----

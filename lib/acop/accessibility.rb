@@ -1,15 +1,17 @@
 require 'open-uri'
 require 'nokogiri'
+require 'rexml/document'
 
 module Acop
 	class Enforcer
-		attr_reader :ah
+		attr_reader :ah, :source, :contents
 
 		def initialize(options={})
 			@ah = Helpers.new
 			url = options[:url]
 			url = "http://" + options[:url] unless options[:url].include?("http")
-			@contents = Nokogiri::HTML(open(url))
+			@source = open(url)
+			@contents = Nokogiri::HTML(@source)
 		end
 
 		def accessibility_checks
@@ -67,6 +69,17 @@ module Acop
 			error_messages
 		end
 
+		def check_doctype(source=@contents)
+			frame_elements = source.css("frame")
+			iframe_elements = source.css("iframe")
+			error_messages = []
+			if(frame_elements.length > 0 or iframe_elements.length > 0)
+				doctype = REXML::Document.new(@source.string).doctype
+				error_messages.push("Frames/iFrames present but doctype is missing") unless doctype
+			end
+			error_messages
+		end
+
 		def check_frame_title(source=@contents)
 			return [] if source.css("frameset").length < 1
 			frame_elements = source.css("frame")
@@ -74,6 +87,16 @@ module Acop
 			frame_elements.each do |frame|
 				error_messages.push("Missing frame title element") unless frame['title']
 				error_messages.push("Empty frame title element") if frame['title'] == ""
+			end
+			error_messages
+		end
+
+		def check_iframe_title(source=@contents)
+			iframe_elements = source.css("iframe")
+			error_messages = []
+			iframe_elements.each do |iframe|
+				error_messages.push("Missing iframe title element") unless iframe['title']
+				error_messages.push("Empty iframe title element") if iframe['title'] == ""
 			end
 			error_messages
 		end

@@ -112,6 +112,14 @@ RSpec.configure do |config|
 			error_messages.should be_empty
 		end
 
+		it "should return error messages when frame/iframe present but no doctype" do
+			stub_request(:any, "www.example.com").to_return(:body => "<!DOCTYPE Resource SYSTEM 'foo.dtd'><frameset cols='50%,50%'><frame src='frame_a.htm'/><frame src='frame_b.htm'/></frameset>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_doctype
+			puts error_messages
+			error_messages.should be_empty
+		end
+
 		it "should return error messages when frame does not have a title" do
 			stub_request(:any, "www.example.com").to_return(:body => "<frameset cols='50%,50%'><frame src='frame_a.htm'><frame src='frame_b.htm'></frameset>", :status => 200)
 			enf = Acop::Enforcer.new({:url => "www.example.com"})
@@ -126,6 +134,22 @@ RSpec.configure do |config|
 			error_messages = enf.check_frame_title
 			error_messages.should_not be_empty
 			error_messages[0].should match("Empty frame title element")
+		end
+
+		it "should return error messages when iframe does not have a title" do
+			stub_request(:any, "www.example.com").to_return(:body => "<iframe src='www.google.com'></iframe>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_iframe_title
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing iframe title element")
+		end
+
+		it "should return error messages when iframe title is empty" do
+			stub_request(:any, "www.example.com").to_return(:body => "<iframe title='' src='www.google.com'></iframe>", :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_iframe_title
+			error_messages.should_not be_empty
+			error_messages[0].should match("Empty iframe title element")
 		end
 	end
 end

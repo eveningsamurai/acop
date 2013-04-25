@@ -1,0 +1,137 @@
+<!doctype html>
+<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
+<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
+  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script type="text/javascript" src="javascripts/script.js"></script>
+
+  <title>Acop</title>
+  <meta name="description" content="flagging accessibility concerns">
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+</head>
+
+<body>
+
+  <div class="wrapper">
+    <header>
+      <h1 class="title">Acop</h1>
+    </header>
+    <div id="container">
+      <p class="tagline">flagging accessibility concerns</p>
+      <div id="main" role="main">
+        <div class="download-bar">
+        <div class="inner">
+          <a href="https://github.com/eveningsamurai/acop/tarball/master" class="download-button tar"><span>Download</span></a>
+          <a href="https://github.com/eveningsamurai/acop/zipball/master" class="download-button zip"><span>Download</span></a>
+          <a href="https://github.com/eveningsamurai/acop" class="code">View Acop on GitHub</a>
+        </div>
+        <span class="blc"></span><span class="trc"></span>
+        </div>
+        <article class="markdown-body">
+          <h1>acop - enforcing accessibility for web pages</h1>
+
+<h2>Description</h2>
+
+<p>acop is a command line utility for verifying accessibility in web pages</p>
+
+<p>With acop, you can specify a url you want to test for accessibility and acop would run through a checklist of accessibility concerns and return any issues found</p>
+
+<h2>Installation</h2>
+
+<p><code>gem install acop</code></p>
+
+<h2>Synopsis</h2>
+
+<p>Access the command line help</p>
+
+<p><code>acop --help</code></p>
+
+<p>Specify the url you want accessibility tested</p>
+
+<p><code>acop -u http://www.google.com</code></p>
+
+<h2>Checkpoints</h2>
+
+<h3>Images</h3>
+
+<p><code>&lt;input type='image'...</code>  </p>
+
+<ul>
+<li>  Image inputs elements should have alt attributes<br>
+</li>
+<li>  Image inputs elements should not have alt attributes empty</li>
+</ul><p><code>&lt;img...</code>  </p>
+
+<ul>
+<li>  Image elements should have alt attributes<br>
+</li>
+<li>  Image elements should not have alt attributes empty<br>
+</li>
+</ul><p><code>&lt;a&gt;&lt;img...</code>  </p>
+
+<ul>
+<li>  Image elements inside anchor tags should have empty alt attributes<br>
+</li>
+</ul><h3>Title</h3>
+
+<p><code>&lt;title&gt;&lt;/title&gt;</code>  </p>
+
+<ul>
+<li>  Page title element should not be empty<br>
+</li>
+</ul><p><code>&lt;!DOCTYPE Resource SYSTEM 'foo.dtd'&gt;</code></p>
+
+<ul>
+<li>  doctype should be specified if frame or iframe elements exist on the page</li>
+</ul><p><code>&lt;frameset&gt;&lt;frame title=""...</code>  </p>
+
+<ul>
+<li>  Frame elements should have title attributes<br>
+</li>
+<li>  Frame elements should not have title attributes empty<br>
+</li>
+</ul><p><code>&lt;iframe title=""...</code></p>
+
+<ul>
+<li>  iFrame elements should have title attributes<br>
+</li>
+<li>  iFrame elements should not have title attributes empty<br>
+</li>
+</ul><h2>Bugs</h2>
+
+<p>Report bugs and requests at <a href="https://github.com/eveningsamurai/acop">the Github page</a>.</p>
+
+<h2>Copyright</h2>
+
+<p>Copyright 2013 by <a href="http://eveningsamurai.wordpress.com">Avinash Padmanabhan</a> under the MIT license (see the LICENSE file).</p>
+        </article>
+      </div>
+    </div>
+    <footer>
+      <div class="owner">
+      <p><a href="https://github.com/eveningsamurai" class="avatar"><img src="https://secure.gravatar.com/avatar/fc4b655258f1643ee6134d9d9e3e8da4?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/eveningsamurai">eveningsamurai</a> maintains <a href="https://github.com/eveningsamurai/acop">Acop</a></p>
+
+
+      </div>
+      <div class="creds">
+        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
+      </div>
+    </footer>
+  </div>
+  <div class="current-section">
+    <a href="#top">Scroll to top</a>
+    <a href="https://github.com/eveningsamurai/acop/tarball/master" class="tar">tar</a><a href="https://github.com/eveningsamurai/acop/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
+    <p class="name"></p>
+  </div>
+
+  
+</body>
+</html>

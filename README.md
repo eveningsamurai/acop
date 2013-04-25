@@ -22,21 +22,29 @@ Access the command line help
 
 Specify the url you want accessibility tested
 
-Accessibility for Images
-`<input type='image'...`
-*Image inputs elements should have alt attributes
-*Image inputs elements should not have alt attributes empty
+`acop -u http://www.google.com`
 
-`<img...`
-*Image elements should have alt attributes
-*Image elements should not have alt attributes empty
+Checkpoints
+-----------
+### Images  
+`<input type='image'...`  
+*   Image inputs elements should have alt attributes  
+*   Image inputs elements should not have alt attributes empty
 
-`<a><img...`
-`acop -u http://quickbooks.intuit.com/credit-card-service`  
-	Missing alt text/attribute for image with src: /qb/categories/pos/images/blue_curve_with_phone_number.png
-	Missing alt text/attribute for image with src: /qb/products/pos/pos_accept_cards/images/pos_gift_card.png
+`<img...`  
+*   Image elements should have alt attributes  
+*   Image elements should not have alt attributes empty  
 
-(Currently looking for input elements of type image and img elements)
+`<a><img...`  
+*   Image elements inside anchor tags should have empty alt attributes  
+
+### Title
+`<title></title>`  
+*   Page title element should not be empty  
+
+`<frameset><frame title=""...`  
+*   Frame title elements should have alt attributes  
+*   Frame title elements should not have alt attributes empty  
 
 Bugs
 ----

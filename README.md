@@ -4,7 +4,7 @@ acop - enforcing accessibility for web pages
 Acop
 ----
 
-[Acop](http://eveningsamurai.github.io/acop/).
+[Acop](http://eveningsamurai.github.io/acop/)
 
 Description
 -----------

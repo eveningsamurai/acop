@@ -67,6 +67,13 @@ Checkpoints
 `<form><textarea id='area' rows='3' cols='3'></textarea><label for='area'/></form>`
 *   Every form element should have a corresponding label (the label 'for' attribute should match the form field 'id' attribute)
 
+Tests
+-----
+Running the rspec tests
+
+`cd spec; rspec acop_spec.rb`
+
+
 Bugs
 ----
 Report bugs and requests at [the Github page](https://github.com/eveningsamurai/acop).

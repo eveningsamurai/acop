@@ -73,6 +73,13 @@ Running the rspec tests
 
 `cd spec; rspec acop_spec.rb`
 
+Additional Resources
+--------------------
+While this gem does attempt to flag as many accessibility concerns as possible, there are numerous others that cannot be automated or are difficult to automate. Below are excellent resources that I would encourage anybody using this gem to also go through
+
+*   [Illinois Center for Information Technology and Web Accessibility](http://html.cita.illinois.edu/iitaa.php)
+*   [PennState AccessAbility](http://accessibility.psu.edu/)
+*   [Web Accessibility in Mind](http://webaim.org/)
 
 Bugs
 ----

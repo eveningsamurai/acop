@@ -174,5 +174,19 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Empty iframe title element")
 		end
+
+		it "should not return error messages when form elements have labels" do
+			stub_request(:any, "www.example.com").to_return(:body => '<form><textarea id="area" rows="3" cols="10" /><label for="area" /></form>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_forms
+			error_messages.should be_empty
+		end
+
+		it "should return error messages when form elements have labels" do
+			stub_request(:any, "www.example.com").to_return(:body => '<form><textarea id="area" rows="3" cols="10" /></form>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_forms
+			error_messages.should_not be_empty
+		end
 	end
 end

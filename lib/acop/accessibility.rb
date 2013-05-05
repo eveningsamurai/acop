@@ -3,6 +3,7 @@ require 'nokogiri'
 require 'rexml/document'
 
 module Acop
+
 	class Enforcer
 		attr_reader :ah, :source, :contents
 
@@ -111,6 +112,25 @@ module Acop
 			end
 			error_messages
 		end
+
+		def check_forms(source=@contents)
+         forms = source.css("form")
+         error_messages = []
+			forms.each do |form|
+				labels = form.css("label")
+				form_fields = []
+				%w{input select textarea button}.each do |element|
+					element_fields = form.css(element)
+					form_fields << form.css(element) unless element_fields.empty?
+				end
+				form_fields.each do |field|
+					id = field.attr('id')
+					error_messages.push("Missing label for form field with id/name: " + id || field.attr('name') || "") if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
+				end
+			end
+         error_messages
+		end
+
 	end
 
 	class Helpers

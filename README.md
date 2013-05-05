@@ -63,6 +63,10 @@ Checkpoints
 *   Area elements should have an alt attribute  
 *   Area element alt attribute cannot be empty
 
+### Forms
+`<form><textarea id='area' rows='3' cols='3'></textarea><label for='area'/></form>
+*   Every form element should have a corresponding label (the label 'for' attribute should match the form field 'id' attribute)
+
 Bugs
 ----
 Report bugs and requests at [the Github page](https://github.com/eveningsamurai/acop).

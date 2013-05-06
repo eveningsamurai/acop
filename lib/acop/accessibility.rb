@@ -113,7 +113,8 @@ module Acop
 			error_messages
 		end
 
-		def check_forms(source=@contents)
+		# each form element should have a corresponding label
+		def check_form_labels(source=@contents)
          forms = source.css("form")
          error_messages = []
 			forms.each do |form|
@@ -123,12 +124,32 @@ module Acop
 					element_fields = form.css(element)
 					form_fields << form.css(element) unless element_fields.empty?
 				end
+				form_fields.flatten!
+				form_fields.reject {|field| field.attr('submit') || field.attr('reset') || field.attr('button')  }
+				
 				form_fields.each do |field|
 					id = field.attr('id')
 					error_messages.push("Missing label for form field with id/name: " + id || field.attr('name') || "") if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
 				end
 			end
          error_messages
+		end
+
+		# each input element of type (submit||reset||button) should have include a "value" attribute and should not have a corresponding label
+		def check_form_inputs(source=@contents)
+			forms = source.css("form")
+			error_messages = []
+			forms.each do |form|
+				input_fields = form.css("input").select {|field| field.attr('type') == 'submit' || field.attr('type') == 'reset' || field.attr('type') == 'button' }
+				labels = form.css("label")
+
+				input_fields.each do |field|
+					value_present = field.attr('value') != nil and field.attr('value') != ""
+					label_absent  = (labels.select {|label| label['for'].to_s == field.attr('id').to_s }.size) < 1
+					error_messages.push("Missing value attribute/label present for input element with id/name: " + (field.attr('id').to_s || field.attr('name') || "")) unless(value_present and label_absent)
+				end
+			end
+			error_messages
 		end
 
 	end

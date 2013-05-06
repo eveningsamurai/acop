@@ -66,6 +66,8 @@ Checkpoints
 ### Forms
 `<form><textarea id='area' rows='3' cols='3'></textarea><label for='area'/></form>`
 *   Every form element should have a corresponding label (the label 'for' attribute should match the form field 'id' attribute)
+
+`<form><input id='in' type='text' value="input_value"/></form>`
 *   Form input elements of type submit|reset|button should not have labels, instead have a non empty 'value' attribute
 
 Tests

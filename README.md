@@ -70,6 +70,15 @@ Checkpoints
 `<form><input id='in' type='text' value="input_value"/></form>`
 *   Form input elements of type submit|reset|button should not have labels, instead have a non empty 'value' attribute
 
+`<label for="label1">Label 1</label><label for="label2">Label 2</label>`
+*   Labels for form controls should have non-empty text
+
+`<legend>Legend 1</legend>`
+*   Legends specified for fieldsets or otherwise should have non-empty text
+
+`<button type="button">Button 1</button>`
+*   Buttons should have non-empty text
+
 Tests
 -----
 Running the rspec tests

@@ -152,6 +152,23 @@ module Acop
 			error_messages
 		end
 
+		def check_form_control_text(source=@contents)
+			error_messages = []
+			labels = source.css("label")
+			labels.each do |label|
+				error_messages.push("Missing label text for label with for attribute: #{label['for']}") if (label.text==nil or label.text=="")
+			end
+
+			%w{legend button}.each do |control|
+				fields = source.css(control)
+				fields.each do |field|
+					error_messages.push("Missing #{control} text for #{control}") if (field.text==nil or field.text=="")
+				end
+			end
+
+			error_messages
+		end
+
 	end
 
 	class Helpers

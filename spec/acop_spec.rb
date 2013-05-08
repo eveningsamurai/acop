@@ -226,5 +226,50 @@ RSpec.configure do |config|
 			error_messages = enf.check_form_inputs
 			error_messages.should be_empty
 		end
+
+		it "should not return error messages when labels have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<label for="label1">Label 1</label><label for="label2">Label 2</label>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should be_empty
+		end
+
+		it "should return error messages when labels do not have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<label for="label1">Label 1</label><label for="label2"></label>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing label text for label")
+		end
+
+		it "should not return error messages when legends have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<legend>Legend 1</legend>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should be_empty
+		end
+
+		it "should return error messages when legends do not have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<legend></legend>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing legend text for legend")
+		end
+
+		it "should not return error messages when buttons have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<button type="button">Button 1</button>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should be_empty
+		end
+
+		it "should return error messages when buttons do not have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<button type="button"></button>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_form_control_text
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing button text for button")
+		end
 	end
 end

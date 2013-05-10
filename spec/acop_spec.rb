@@ -342,5 +342,36 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Missing table summary")
 		end
+
+		it "should return error_messages when html lang attribute is not specified" do
+			stub_request(:any, "www.example.com").to_return(:body => '<html></html>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_html_lang
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing lang attribute for html")
+		end
+
+		it "should not return error_messages when html lang attribute is specified" do
+			stub_request(:any, "www.example.com").to_return(:body => '<html lang="en"></html>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_html_lang
+			error_messages.should be_empty
+		end
+
+		it "should return error_messages when html visual formatting elements are used" do
+			stub_request(:any, "www.example.com").to_return(:body => '<body><b>Bold text</b><p><i>Italicized Text</i></p></body>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_visual_formatting
+			error_messages.should_not be_empty
+			error_messages[0].should match("HTML visual formatting elements being used")
+		end
+
+		it "should return error_messages when html flashing elements are used" do
+			stub_request(:any, "www.example.com").to_return(:body => '<body><blink>Blinking text</blink><p><marquee>Marquee Text</marquee></p></body>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_flashing_content
+			error_messages.should_not be_empty
+			error_messages[0].should match("Flashing elements")
+		end
 	end
 end

@@ -81,6 +81,14 @@ module Acop
 			error_messages
 		end
 
+		def check_visual_formatting(source=@contents)
+			error_messages = []
+			%w{b i font center u}.each do |markup_element|
+				error_messages.push("HTML visual formatting elements being used. Use CSS instead") unless source.css(markup_element).empty?
+			end
+			error_messages
+		end
+
 		def check_doctype(source=@contents)
 			frame_elements = source.css("frame")
 			iframe_elements = source.css("iframe")
@@ -88,6 +96,21 @@ module Acop
 			if(frame_elements.length > 0 or iframe_elements.length > 0)
 				doctype = REXML::Document.new(@source.string).doctype
 				error_messages.push("Frames/iFrames present but doctype is missing") unless doctype
+			end
+			error_messages
+		end
+
+		def check_html_lang(source=@contents)
+			html = source.css("html")
+			error_messages = []
+			error_messages.push("Missing lang attribute for html") if(html.attr('lang') == nil or html.attr('lang').value == "")
+			error_messages
+		end
+
+		def check_flashing_content(source=@contents)
+			error_messages = []
+			%w{blink marquee}.each do |flashing_element|
+				error_messages.push("Flashing elements such as 'blink' or 'marquee' should not be used") unless source.css(flashing_element).empty?
 			end
 			error_messages
 		end

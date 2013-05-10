@@ -31,6 +31,37 @@ Specify the url you want accessibility tested
 
 Checkpoints
 -----------
+### Standard Web Programming
+`<!DOCTYPE Resource SYSTEM 'foo.dtd'>`
+*   Doctype should be specified if frame or iframe elements exist on the page
+
+### Appropriate Markup
+*   HTML visual formatting elements like '<b></b>', '<i></i>', '<center></center>', '<font></font>', '<u></u>' should not be used. Use CSS for formatting instead
+
+### Title
+`<title></title>`  
+*   Page title element should not be empty or missing
+*   There should not be more than one page title
+
+`<frameset><frame title=""...`  
+*   Frame elements should have title attributes  
+*   Frame elements should not have title attributes empty  
+
+`<iframe title=""...`
+*   iFrame elements should have title attributes  
+*   iFrame elements should not have title attributes empty  
+
+### Headings
+`<body><p><h1>Heading 1</h1><h2>Heading 2</h2><p><h3>Heading 3</h3></p></body>`
+*   Page must contain atleast one h1 element
+*   The h1 element should have non empty text
+*   Heading elements that follow the h1 element should be properly nested
+*   All subheadings(h2..h6) should have non empty text
+
+### HTML lang
+`<html lang='en'></html>`
+*   You should declare the primary language of a page with the html lang attribute
+
 ### Images  
 `<input type='image'...`  
 *   Image inputs elements should have alt attributes  
@@ -43,25 +74,13 @@ Checkpoints
 `<a><img...`  
 *   Image elements inside anchor tags should have empty alt attributes  
 
-### Title
-`<title></title>`  
-*   Page title element should not be empty  
-
-`<!DOCTYPE Resource SYSTEM 'foo.dtd'>`
-*   doctype should be specified if frame or iframe elements exist on the page
-
-`<frameset><frame title=""...`  
-*   Frame elements should have title attributes  
-*   Frame elements should not have title attributes empty  
-
-`<iframe title=""...`
-*   iFrame elements should have title attributes  
-*   iFrame elements should not have title attributes empty  
-
 ### Area
 `<area shape='rect' coords='0,0,82,126' href='sun.htm' alt='Sun'>`  
 *   Area elements should have an alt attribute  
 *   Area element alt attribute cannot be empty
+
+### Flashing content
+*   The blink and marquee elements must not be used. Blinking and moving text are an accessibility problems for people with photosenstive epilepsy and visual impairments.
 
 ### Forms
 `<form><textarea id='area' rows='3' cols='3'></textarea><label for='area'/></form>`
@@ -78,13 +97,6 @@ Checkpoints
 
 `<button type="button">Button 1</button>`
 *   Buttons should have non-empty text
-
-### Headings
-`<body><p><h1>Heading 1</h1><h2>Heading 2</h2><p><h3>Heading 3</h3></p></body>`
-*   Page must contain atleast one h1 element
-*   The h1 element should have non empty text
-*   Heading elements that follow the h1 element should be properly nested
-*   All subheadings(h2..h6) should have non empty text
 
 ### Tables
 `<table summary="summary"><th>Table Heading</th><tr><td>Data 1</td></tr></table>`

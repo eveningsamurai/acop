@@ -311,5 +311,36 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Incorrect document heading structure")
 		end
+
+		it "should return error_messages when table is missing table headers" do
+			stub_request(:any, "www.example.com").to_return(:body => '<table summary="summary"><tr><td>Data 1</td></tr></table>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_table_headers
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing table headers for table with summary: summary")
+		end
+
+		it "should return error_messages when table headers are missing scope" do
+			stub_request(:any, "www.example.com").to_return(:body => '<table summary="summary"><th>Table Heading</th><tr><td>Data 1</td></tr></table>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_table_headers
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing scope for table header")
+		end
+
+		it "should not return error_messages when table headers has scope" do
+			stub_request(:any, "www.example.com").to_return(:body => '<table summary="summary"><th scope="row">Table Heading</th><tr><td>Data 1</td></tr></table>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_table_headers
+			error_messages.should be_empty
+		end
+
+		it "should return error_messages when table is missing summary" do
+			stub_request(:any, "www.example.com").to_return(:body => '<table><th>Table Heading</th><tr><td>Data 1</td></tr></table>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_table_summary
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing table summary")
+		end
 	end
 end

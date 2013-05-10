@@ -86,6 +86,12 @@ Checkpoints
 *   Heading elements that follow the h1 element should be properly nested
 *   All subheadings(h2..h6) should have non empty text
 
+### Tables
+`<table summary="summary"><th>Table Heading</th><tr><td>Data 1</td></tr></table>`
+*   Table should have a table header
+*   Table should have a non empty summary attribute
+*   Table headers should have a non empty scope attribute specifying whether it is for a row or column
+
 Tests
 -----
 Running the rspec tests

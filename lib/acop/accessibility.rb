@@ -207,6 +207,35 @@ module Acop
 			error_messages
 		end
 
+		def check_table_summary(source=@contents)
+			error_messages = []
+			tables = source.css("table")
+
+			tables.each do |table|
+				error_messages.push("Missing table summary") if(table['summary'] == nil or table['summary'] == "")
+			end
+			error_messages
+		end
+
+		def check_table_headers(source=@contents)
+			error_messages = []
+			tables = source.css("table")
+
+			tables.each do |table|
+			 if table.css("th").empty?
+				error_messages.push("Missing table headers for table with summary: " + (table['summary'] || ""))
+			 end
+			end
+
+			tables.each do |table|
+				th_elements = table.css("th")
+				th_elements.each do |th|
+					error_messages.push("Missing scope for table header") if (th['scope'] == nil || th['scope'] == "")
+				end
+			end
+			error_messages
+		end
+
 	end
 
 	class Helpers

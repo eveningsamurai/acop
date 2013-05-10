@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.version     = Acop::VERSION
   s.date        = '2013-04-22'
   s.summary     = "Accessibility Cop"
-  s.description = "A gem to enforce accessibility testing of urls'"
+  s.description = "A gem to enforce webpage accessibility'"
   s.authors     = ["Avinash Padmanabhan"]
   s.email       = ['avinashpadmanabhan@gmail.com']
   s.files       = `git ls-files`.split("\n")

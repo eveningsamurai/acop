@@ -163,7 +163,7 @@ module Acop
 				
 				form_fields.each do |field|
 					id = field.attr('id')
-					error_messages.push("Missing label for form field with id/name: " + id || field.attr('name') || "") if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
+					error_messages.push("Missing label for form field with id/name: " + (id || field.attr('name') || "")) if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
 				end
 			end
          error_messages

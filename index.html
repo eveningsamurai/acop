@@ -1,42 +1,41 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Acop : flagging accessibility concerns" />
 
-  <title>Acop</title>
-  <meta name="description" content="flagging accessibility concerns">
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Acop</title>
+  </head>
 
-</head>
+  <body>
 
-<body>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/eveningsamurai/acop">View on GitHub</a>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Acop</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">flagging accessibility concerns</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/eveningsamurai/acop/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/eveningsamurai/acop/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/eveningsamurai/acop" class="code">View Acop on GitHub</a>
-        </div>
-        <span class="blc"></span><span class="trc"></span>
-        </div>
-        <article class="markdown-body">
-          <h1>acop - enforcing accessibility for web pages</h1>
+          <h1 id="project_title">Acop</h1>
+          <h2 id="project_tagline">flagging accessibility concerns</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/eveningsamurai/acop/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/eveningsamurai/acop/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h1>acop - enforcing accessibility for web pages</h1>
+
+<h2>Acop</h2>
+
+<p><a href="http://eveningsamurai.github.io/acop/">Acop</a></p>
 
 <h2>Description</h2>
 
@@ -60,7 +59,60 @@
 
 <h2>Checkpoints</h2>
 
-<h3>Images</h3>
+<h3>Standard Web Programming</h3>
+
+<p><code>&lt;!DOCTYPE Resource SYSTEM 'foo.dtd'&gt;</code></p>
+
+<ul>
+<li>  Doctype should be specified if frame or iframe elements exist on the page</li>
+</ul><h3>Appropriate Markup</h3>
+
+<ul>
+<li>  HTML visual formatting elements like <code>&lt;b&gt;&lt;/b&gt;</code>, <code>&lt;i&gt;&lt;/i&gt;</code>, <code>&lt;center&gt;&lt;/center&gt;</code>, <code>&lt;font&gt;&lt;/font&gt;</code>, <code>&lt;u&gt;&lt;/u&gt;</code> should not be used. Use CSS for formatting instead</li>
+</ul><h3>Title</h3>
+
+<p><code>&lt;title&gt;&lt;/title&gt;</code>  </p>
+
+<ul>
+<li>  Page title element should not be empty or missing</li>
+<li>  There should not be more than one page title</li>
+</ul><p><code>&lt;frameset&gt;&lt;frame title=""...</code>  </p>
+
+<ul>
+<li>  Frame elements should have title attributes<br>
+</li>
+<li>  Frame elements should not have title attributes empty<br>
+</li>
+</ul><p><code>&lt;iframe title=""...</code></p>
+
+<ul>
+<li>  iFrame elements should have title attributes<br>
+</li>
+<li>  iFrame elements should not have title attributes empty<br>
+</li>
+</ul><h3>Headings</h3>
+
+<p><code>&lt;body&gt;&lt;p&gt;&lt;h1&gt;Heading 1&lt;/h1&gt;&lt;h2&gt;Heading 2&lt;/h2&gt;&lt;p&gt;&lt;h3&gt;Heading 3&lt;/h3&gt;&lt;/p&gt;&lt;/body&gt;</code></p>
+
+<ul>
+<li>  Page must contain atleast one h1 element</li>
+<li>  The h1 element should have non empty text</li>
+<li>  Heading elements that follow the h1 element should be properly nested</li>
+<li>  All subheadings(h2..h6) should have non empty text</li>
+</ul><h3>HTML lang</h3>
+
+<p><code>&lt;html lang='en'&gt;&lt;/html&gt;</code></p>
+
+<ul>
+<li>  You should declare the primary language of a page with the html lang attribute</li>
+</ul><h3>Hyperlinks</h3>
+
+<p><code>&lt;body&gt;&lt;a href="www.google.com"&gt;Go to Google&lt;/a&gt;&lt;/body&gt;</code></p>
+
+<ul>
+<li>  Hyperlinks should always have text associated with them</li>
+<li>  There should not be duplicate text for hyperlinks on the same page</li>
+</ul><h3>Images</h3>
 
 <p><code>&lt;input type='image'...</code>  </p>
 
@@ -80,30 +132,64 @@
 <ul>
 <li>  Image elements inside anchor tags should have empty alt attributes<br>
 </li>
-</ul><h3>Title</h3>
+</ul><h3>Area</h3>
 
-<p><code>&lt;title&gt;&lt;/title&gt;</code>  </p>
-
-<ul>
-<li>  Page title element should not be empty<br>
-</li>
-</ul><p><code>&lt;!DOCTYPE Resource SYSTEM 'foo.dtd'&gt;</code></p>
+<p><code>&lt;area shape='rect' coords='0,0,82,126' href='sun.htm' alt='Sun'&gt;</code>  </p>
 
 <ul>
-<li>  doctype should be specified if frame or iframe elements exist on the page</li>
-</ul><p><code>&lt;frameset&gt;&lt;frame title=""...</code>  </p>
+<li>  Area elements should have an alt attribute<br>
+</li>
+<li>  Area element alt attribute cannot be empty</li>
+</ul><h3>Flashing content</h3>
 
 <ul>
-<li>  Frame elements should have title attributes<br>
-</li>
-<li>  Frame elements should not have title attributes empty<br>
-</li>
-</ul><p><code>&lt;iframe title=""...</code></p>
+<li>  The blink and marquee elements must not be used. Blinking and moving text are an accessibility problems for people with photosenstive epilepsy and visual impairments.</li>
+</ul><h3>Forms</h3>
+
+<p><code>&lt;form&gt;&lt;textarea id='area' rows='3' cols='3'&gt;&lt;/textarea&gt;&lt;label for='area'/&gt;&lt;/form&gt;</code></p>
 
 <ul>
-<li>  iFrame elements should have title attributes<br>
+<li>  Every form element should have a corresponding label (the label 'for' attribute should match the form field 'id' attribute)</li>
+</ul><p><code>&lt;form&gt;&lt;input id='in' type='text' value="input_value"/&gt;&lt;/form&gt;</code></p>
+
+<ul>
+<li>  Form input elements of type submit|reset|button should not have labels, instead have a non empty 'value' attribute</li>
+</ul><p><code>&lt;label for="label1"&gt;Label 1&lt;/label&gt;&lt;label for="label2"&gt;Label 2&lt;/label&gt;</code></p>
+
+<ul>
+<li>  Labels for form controls should have non-empty text</li>
+</ul><p><code>&lt;legend&gt;Legend 1&lt;/legend&gt;</code></p>
+
+<ul>
+<li>  Legends specified for fieldsets or otherwise should have non-empty text</li>
+</ul><p><code>&lt;button type="button"&gt;Button 1&lt;/button&gt;</code></p>
+
+<ul>
+<li>  Buttons should have non-empty text</li>
+</ul><h3>Tables</h3>
+
+<p><code>&lt;table summary="summary"&gt;&lt;th&gt;Table Heading&lt;/th&gt;&lt;tr&gt;&lt;td&gt;Data 1&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</code></p>
+
+<ul>
+<li>  Table should have a table header</li>
+<li>  Table should have a non empty summary attribute</li>
+<li>  Table headers should have a non empty scope attribute specifying whether it is for a row or column</li>
+</ul><h2>Tests</h2>
+
+<p>Running the rspec tests</p>
+
+<p><code>cd spec; rspec acop_spec.rb</code></p>
+
+<h2>Additional Resources</h2>
+
+<p>While this gem does attempt to flag as many accessibility concerns as possible, there are numerous others that cannot be automated or are difficult to automate. Below are excellent resources that I would encourage anybody using this gem to also go through</p>
+
+<ul>
+<li>  <a href="http://html.cita.illinois.edu/iitaa.php">Illinois Center for Information Technology and Web Accessibility</a>
 </li>
-<li>  iFrame elements should not have title attributes empty<br>
+<li>  <a href="http://accessibility.psu.edu/">PennState AccessAbility</a>
+</li>
+<li>  <a href="http://webaim.org/">Web Accessibility in Mind</a>
 </li>
 </ul><h2>Bugs</h2>
 
@@ -112,26 +198,18 @@
 <h2>Copyright</h2>
 
 <p>Copyright 2013 by <a href="http://eveningsamurai.wordpress.com">Avinash Padmanabhan</a> under the MIT license (see the LICENSE file).</p>
-        </article>
-      </div>
+      </section>
     </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/eveningsamurai" class="avatar"><img src="https://secure.gravatar.com/avatar/fc4b655258f1643ee6134d9d9e3e8da4?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/eveningsamurai">eveningsamurai</a> maintains <a href="https://github.com/eveningsamurai/acop">Acop</a></p>
 
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Acop maintained by <a href="https://github.com/eveningsamurai">eveningsamurai</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
 
-      </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/eveningsamurai/acop/tarball/master" class="tar">tar</a><a href="https://github.com/eveningsamurai/acop/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
+    
 
-  
-</body>
+  </body>
 </html>

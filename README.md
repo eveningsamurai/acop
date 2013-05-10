@@ -36,7 +36,7 @@ Checkpoints
 *   Doctype should be specified if frame or iframe elements exist on the page
 
 ### Appropriate Markup
-*   HTML visual formatting elements like '<b></b>', '<i></i>', '<center></center>', '<font></font>', '<u></u>' should not be used. Use CSS for formatting instead
+*   HTML visual formatting elements like `<b></b>`, `<i></i>`, `<center></center>`, `<font></font>`, `<u></u>` should not be used. Use CSS for formatting instead
 
 ### Title
 `<title></title>`  

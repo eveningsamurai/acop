@@ -62,6 +62,11 @@ Checkpoints
 `<html lang='en'></html>`
 *   You should declare the primary language of a page with the html lang attribute
 
+### Hyperlinks
+`<body><a href="www.google.com">Go to Google</a></body>`
+*   Hyperlinks should always have text associated with them
+*   There should not be duplicate text for hyperlinks on the same page
+
 ### Images  
 `<input type='image'...`  
 *   Image inputs elements should have alt attributes  

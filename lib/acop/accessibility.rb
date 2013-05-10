@@ -107,6 +107,17 @@ module Acop
 			error_messages
 		end
 
+		def check_hyperlinks(source=@contents)
+			hyperlinks = source.css("a")
+			error_messages = []
+			hyperlinks.each do |link|
+				error_messages.push("Missing link text for link with href: #{link['href']}") if(link.text==nil or link.text=="")
+			end
+			hyperlink_text = hyperlinks.collect {|link| link.text }
+			error_messages.push("Links should not have duplicate text") if(hyperlink_text != hyperlink_text.uniq)
+			error_messages
+		end
+
 		def check_flashing_content(source=@contents)
 			error_messages = []
 			%w{blink marquee}.each do |flashing_element|

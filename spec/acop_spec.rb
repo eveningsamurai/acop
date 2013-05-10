@@ -373,5 +373,21 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Flashing elements")
 		end
+
+		it "should return error messages when link text is absent" do
+			stub_request(:any, "www.example.com").to_return(:body => '<body><a href="www.google.com"></a></body>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_hyperlinks
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing link text for link")
+		end
+
+		it "should return error messages when there is duplicate link text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<body><a href="www.google.com">Go to Google</a><p><a href="www.google.com">Go to Google</a></p></body>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_hyperlinks
+			error_messages.should_not be_empty
+			error_messages[0].should match("Links should not have duplicate text")
+		end
 	end
 end

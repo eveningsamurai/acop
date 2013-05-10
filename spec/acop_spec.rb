@@ -271,5 +271,45 @@ RSpec.configure do |config|
 			error_messages.should_not be_empty
 			error_messages[0].should match("Missing button text for button")
 		end
+
+		it "should return error_messages when document does not have level 1 heading" do
+			stub_request(:any, "www.example.com").to_return(:body => '<h2>Heading 2</h2><p><h3>Heading 3</h3></p>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_h1
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing heading level 1")
+		end
+
+		it "should return error_messages when headings do not have text" do
+			stub_request(:any, "www.example.com").to_return(:body => '<p><h1></h1></p><h2>Heading 2</h2><h3></h3>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_heading_text
+			error_messages.should_not be_empty
+			error_messages[0].should match("Missing text for h1 element")
+			error_messages[1].should match("Missing text for h3 element")
+		end
+
+		it "should not return error_messages when document has correct heading structure" do
+			stub_request(:any, "www.example.com").to_return(:body => '<body><p><h1>Heading 1</h1><h2>Heading 2</h2><p><h3>Heading 3</h3></p></body>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_heading_structure
+			error_messages.should be_empty
+		end
+
+		it "should return error_messages when document has incorrect heading structure" do
+			stub_request(:any, "www.example.com").to_return(:body => '<p><h2>Heading 2</h2><h1>Heading 1</h1><p><h3>Heading 3</h3></p>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_heading_structure
+			error_messages.should_not be_empty
+			error_messages[0].should match("First heading level should be h1")
+		end
+
+		it "should return error_messages when document has incorrect heading structure" do
+			stub_request(:any, "www.example.com").to_return(:body => '<p><h1>Heading 1</h1><h3>Heading 3</h3><p><h4>Heading 4</h4></p><h2>Heading 2</h2>', :status => 200)
+			enf = Acop::Enforcer.new({:url => "www.example.com"})
+			error_messages = enf.check_heading_structure
+			error_messages.should_not be_empty
+			error_messages[0].should match("Incorrect document heading structure")
+		end
 	end
 end

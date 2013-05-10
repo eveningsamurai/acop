@@ -165,7 +165,45 @@ module Acop
 					error_messages.push("Missing #{control} text for #{control}") if (field.text==nil or field.text=="")
 				end
 			end
+			error_messages
+		end
 
+		def check_h1(source=@contents)
+			h1_elements = source.css("h1")
+			error_messages = []
+			error_messages.push("Missing heading level 1. Provide atleast one level 1 heading for document content") if h1_elements.empty?
+			error_messages
+		end
+
+		def check_heading_text(source=@contents)
+			error_messages = []
+			headings = []
+			%w{h1 h2 h3 h4 h5 h6}.each do |heading|
+				headings << source.css(heading)
+			end
+			headings.flatten!
+			headings.each do |heading|
+				error_messages.push("Missing text for #{heading.name} element") if(heading.text==nil or heading.text=="")
+			end
+			error_messages
+		end
+
+		def check_heading_structure(source=@contents)
+			error_messages = []
+			all_nodes = []
+			source.at_css('body').traverse {|node| all_nodes << node.name }
+			headings = all_nodes.select {|node| node =~ /^h\d/ }
+			if headings.first != "h1"
+				error_messages.push("First heading level should be h1") 
+				return error_messages
+			end
+
+			prev_heading_level = 0
+			headings.each do |heading|
+				heading_level = heading[1]
+				error_messages.push("Incorrect document heading structure") if (heading_level.to_i - prev_heading_level.to_i > 1)
+				prev_heading_level = heading[1]
+			end
 			error_messages
 		end
 

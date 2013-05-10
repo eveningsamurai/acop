@@ -79,6 +79,13 @@ Checkpoints
 `<button type="button">Button 1</button>`
 *   Buttons should have non-empty text
 
+### Headings
+`<body><p><h1>Heading 1</h1><h2>Heading 2</h2><p><h3>Heading 3</h3></p></body>`
+*   Page must contain atleast one h1 element
+*   The h1 element should have non empty text
+*   Heading elements that follow the h1 element should be properly nested
+*   All subheadings(h2..h6) should have non empty text
+
 Tests
 -----
 Running the rspec tests

@@ -37,7 +37,7 @@ module Acop
 				urls.each do |url|
 					error_messages = []
 					puts("==============================================")
-					puts("ACCESSIBILITY ISSUES FOR: #{@options[:url]}")
+					puts("ACCESSIBILITY ISSUES FOR: #{url}")
 					puts("==============================================")
 					get_url_contents(formatted_url(url))
 					self.methods.each do |method|

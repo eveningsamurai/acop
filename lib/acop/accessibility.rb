@@ -137,8 +137,10 @@ module Acop
 			hyperlinks.each do |link|
 				error_messages.push("Line #{link.line}: Missing link text for link with href: #{link['href']}") if(link.text==nil or link.text=="")
 			end
-			hyperlink_text = hyperlinks.collect {|link| link.text }
-			error_messages.push("Links should not have duplicate text") if(hyperlink_text != hyperlink_text.uniq)
+			hyperlink_text = hyperlinks.collect {|link| link.text.lstrip }
+			duplicate_hyperlink_text = hyperlink_text.select{|link| hyperlink_text.count(link) > 1}.uniq
+			duplicate_hyperlink_text.reject! {|text| text.empty? }
+			error_messages.push("Links should not have duplicate text: #{duplicate_hyperlink_text}") unless(duplicate_hyperlink_text.empty?)
 			error_messages
 		end
 

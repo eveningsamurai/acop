@@ -29,7 +29,7 @@ Specify the url you want accessibility tested
 
 `acop -u http://www.google.com`
 
-Specify the urls to be tested in a file
+Specify the urls to be tested in a file (new line separated)
 
 `acop -f ./list_of_urls.txt`
 

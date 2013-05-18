@@ -54,7 +54,7 @@ module Acop
 			error_messages = []
 			image_inputs.each do |input|
 				if (@ah.attribute_empty_or_nil(input, "alt") and input.parent.name != "a")
-					error_messages.push("Missing alt text/attribute for image button with id/name: " + (input['name'] || input['id'] || ""))
+					error_messages.push("Line #{input.line}: Missing alt text/attribute for image button with id/name: " + (input['name'] || input['id'] || ""))
 				end
 			end
 			error_messages
@@ -65,7 +65,7 @@ module Acop
 			error_messages = []
 			image_elements.each do |element|
 				if (@ah.attribute_empty_or_nil(element, "alt") and element.parent.name != "a")
-					error_messages.push("Missing alt text/attribute for image with src: " + element['src'])
+					error_messages.push("Line #{element.line}: Missing alt text/attribute for image with src: " + element['src'])
 				end
 			end
 			error_messages
@@ -77,7 +77,7 @@ module Acop
 			image_links = []
 			link_elements.each do |link_element|
 				if(link_element['alt'] != "")
-					error_messages.push("Alt Text not empty or nil for image link with src: " + link_element['src'])
+					error_messages.push("Line #{link_element.line}: Alt Text not empty or nil for image link with src: " + link_element['src'])
 				end
 			end
 			error_messages
@@ -88,7 +88,7 @@ module Acop
 			error_messages = []
 			area_elements.each do |element|
 				if (@ah.attribute_empty_or_nil(element, "alt"))
-					error_messages.push("Missing alt text/attribute for area element with id/name: " + (element['name'] || element['id'] || ""))
+					error_messages.push("Line #{element.line}: Missing alt text/attribute for area element with id/name: " + (element['name'] || element['id'] || ""))
 				end
 			end
 			error_messages
@@ -97,9 +97,9 @@ module Acop
 		def check_page_title(source=@contents)
 			title_element = source.css('title')
 			error_messages = []
-			error_messages.push("Missing title element") if title_element.empty?
-			error_messages.push("Empty title element") if(title_element.first and title_element.first.text == "")
-			error_messages.push("More than 1 title element") if title_element.length > 1
+			error_messages.push("Line #{title_element.line}: Missing title element") if title_element.empty?
+			error_messages.push("Line #{title_element.line}: Empty title element") if(title_element.first and title_element.first.text == "")
+			error_messages.push("Line #{title_element.line}: More than 1 title element") if title_element.length > 1
 
 			error_messages
 		end
@@ -107,7 +107,7 @@ module Acop
 		def check_visual_formatting(source=@contents)
 			error_messages = []
 			%w{b i font center u}.each do |markup_element|
-				error_messages.push("HTML visual formatting elements being used. Use CSS instead") unless source.css(markup_element).empty?
+				error_messages.push("Line #{markup_element.line}: HTML visual formatting elements being used. Use CSS instead") unless source.css(markup_element).empty?
 			end
 			error_messages
 		end
@@ -134,7 +134,7 @@ module Acop
 			hyperlinks = source.css("a")
 			error_messages = []
 			hyperlinks.each do |link|
-				error_messages.push("Missing link text for link with href: #{link['href']}") if(link.text==nil or link.text=="")
+				error_messages.push("Line #{link.line}: Missing link text for link with href: #{link['href']}") if(link.text==nil or link.text=="")
 			end
 			hyperlink_text = hyperlinks.collect {|link| link.text }
 			error_messages.push("Links should not have duplicate text") if(hyperlink_text != hyperlink_text.uniq)
@@ -144,7 +144,7 @@ module Acop
 		def check_flashing_content(source=@contents)
 			error_messages = []
 			%w{blink marquee}.each do |flashing_element|
-				error_messages.push("Flashing elements such as 'blink' or 'marquee' should not be used") unless source.css(flashing_element).empty?
+				error_messages.push("Line #{flashing_element.line}: Flashing elements such as 'blink' or 'marquee' should not be used") unless source.css(flashing_element).empty?
 			end
 			error_messages
 		end
@@ -154,8 +154,8 @@ module Acop
 			frame_elements = source.css("frame")
 			error_messages = []
 			frame_elements.each do |frame|
-				error_messages.push("Missing frame title element") unless frame['title']
-				error_messages.push("Empty frame title element") if frame['title'] == ""
+				error_messages.push("Line #{frame.line}: Missing frame title element") unless frame['title']
+				error_messages.push("Line #{frame.line}: Empty frame title element") if frame['title'] == ""
 			end
 			error_messages
 		end
@@ -164,8 +164,8 @@ module Acop
 			iframe_elements = source.css("iframe")
 			error_messages = []
 			iframe_elements.each do |iframe|
-				error_messages.push("Missing iframe title element") unless iframe['title']
-				error_messages.push("Empty iframe title element") if iframe['title'] == ""
+				error_messages.push("Line #{iframe.line}: Missing iframe title element") unless iframe['title']
+				error_messages.push("Line #{iframe.line}: Empty iframe title element") if iframe['title'] == ""
 			end
 			error_messages
 		end
@@ -182,11 +182,11 @@ module Acop
 					form_fields << form.css(element) unless element_fields.empty?
 				end
 				form_fields.flatten!
-				form_fields.reject {|field| field.attr('submit') || field.attr('reset') || field.attr('button')  }
+				form_fields.reject! {|field| field.attr('type') == 'submit' || field.attr('type') == 'reset' || field.attr('type') == 'button' }
 				
 				form_fields.each do |field|
 					id = field.attr('id')
-					error_messages.push("Missing label for form field with id/name: " + (id || field.attr('name') || "")) if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
+					error_messages.push("Line #{field.line}: Missing label for form field with id/name: " + (id || field.attr('name') || "")) if (labels.select {|label| label['for'].to_s == id.to_s }.size < 1)
 				end
 			end
          error_messages
@@ -203,7 +203,7 @@ module Acop
 				input_fields.each do |field|
 					value_present = field.attr('value') != nil and field.attr('value') != ""
 					label_absent  = (labels.select {|label| label['for'].to_s == field.attr('id').to_s }.size) < 1
-					error_messages.push("Missing value attribute/label present for input element with id/name: " + (field.attr('id').to_s || field.attr('name') || "")) unless(value_present and label_absent)
+					error_messages.push("Line #{field.line}: Missing value attribute/label present for input element with id/name: " + (field.attr('id').to_s || field.attr('name') || "")) unless(value_present and label_absent)
 				end
 			end
 			error_messages
@@ -213,13 +213,13 @@ module Acop
 			error_messages = []
 			labels = source.css("label")
 			labels.each do |label|
-				error_messages.push("Missing label text for label with for attribute: #{label['for']}") if (label.text==nil or label.text=="")
+				error_messages.push("Line #{label.line}: Missing label text for label with for attribute: #{label['for']}") if (label.text==nil or label.text=="")
 			end
 
 			%w{legend button}.each do |control|
 				fields = source.css(control)
 				fields.each do |field|
-					error_messages.push("Missing #{control} text for #{control}") if (field.text==nil or field.text=="")
+					error_messages.push("Line #{field.line}: Missing #{control} text for #{control}") if (field.text==nil or field.text=="")
 				end
 			end
 			error_messages
@@ -240,7 +240,7 @@ module Acop
 			end
 			headings.flatten!
 			headings.each do |heading|
-				error_messages.push("Missing text for #{heading.name} element") if(heading.text==nil or heading.text=="")
+				error_messages.push("Line #{heading.line}: Missing text for #{heading.name} element") if(heading.text==nil or heading.text=="")
 			end
 			error_messages
 		end
@@ -269,7 +269,7 @@ module Acop
 			tables = source.css("table")
 
 			tables.each do |table|
-				error_messages.push("Missing table summary") if(table['summary'] == nil or table['summary'] == "")
+				error_messages.push("Line #{table.line}: Missing table summary") if(table['summary'] == nil or table['summary'] == "")
 			end
 			error_messages
 		end
@@ -280,14 +280,14 @@ module Acop
 
 			tables.each do |table|
 			 if table.css("th").empty?
-				error_messages.push("Missing table headers for table with summary: " + (table['summary'] || ""))
+				error_messages.push("#{table.line}: Missing table headers for table with summary: " + (table['summary'] || ""))
 			 end
 			end
 
 			tables.each do |table|
 				th_elements = table.css("th")
 				th_elements.each do |th|
-					error_messages.push("Missing scope for table header") if (th['scope'] == nil || th['scope'] == "")
+					error_messages.push("Line #{th.line}: Missing scope for table header") if (th['scope'] == nil || th['scope'] == "")
 				end
 			end
 			error_messages

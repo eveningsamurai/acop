@@ -97,9 +97,9 @@ module Acop
 		def check_page_title(source=@contents)
 			title_element = source.css('title')
 			error_messages = []
-			error_messages.push("Line #{title_element.line}: Missing title element") if title_element.empty?
-			error_messages.push("Line #{title_element.line}: Empty title element") if(title_element.first and title_element.first.text == "")
-			error_messages.push("Line #{title_element.line}: More than 1 title element") if title_element.length > 1
+			error_messages.push("Missing title element") if title_element.empty?
+			error_messages.push("Line #{title_element.first.line}: Empty title element") if(title_element.first and title_element.first.text == "")
+			error_messages.push("Line #{title_element.first.line}: More than 1 title element") if title_element.length > 1
 
 			error_messages
 		end
@@ -107,7 +107,8 @@ module Acop
 		def check_visual_formatting(source=@contents)
 			error_messages = []
 			%w{b i font center u}.each do |markup_element|
-				error_messages.push("Line #{markup_element.line}: HTML visual formatting elements being used. Use CSS instead") unless source.css(markup_element).empty?
+				visual_formatting_fields = source.css(markup_element)
+				error_messages.push("Line #{visual_formatting_fields.first.line}: HTML visual formatting elements being used. Use CSS instead") unless visual_formatting_fields.empty?
 			end
 			error_messages
 		end
@@ -144,7 +145,8 @@ module Acop
 		def check_flashing_content(source=@contents)
 			error_messages = []
 			%w{blink marquee}.each do |flashing_element|
-				error_messages.push("Line #{flashing_element.line}: Flashing elements such as 'blink' or 'marquee' should not be used") unless source.css(flashing_element).empty?
+				flashing_element_fields = source.css(flashing_element)
+				error_messages.push("Line #{flashing_element_fields.first.line}: Flashing elements such as 'blink' or 'marquee' should not be used") unless flashing_element_fields.empty?
 			end
 			error_messages
 		end

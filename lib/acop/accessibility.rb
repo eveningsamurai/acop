@@ -5,24 +5,47 @@ require 'rexml/document'
 module Acop
 
 	class Enforcer
-		attr_reader :ah, :source, :contents
+		attr_reader :ah, :options, :source, :contents
 
 		def initialize(options={})
+			@options = options
 			@ah = Helpers.new
-			url = options[:url]
-			url = "http://" + options[:url] unless options[:url].include?("http")
+		end
+
+		def get_url_contents(url)
 			@source = open(url)
 			@contents = Nokogiri::HTML(@source)
 		end
 
+		def formatted_url(url)
+			url = "http://" + url unless url.include?("http")
+		end
+
 		def accessibility_checks
-			error_messages = []
-
-			self.methods.each do |method|
-				error_messages << (self.public_send(method)) if method[0..5] == "check_"
+			if(@options[:url])
+				error_messages = []
+				puts("==============================================")
+				puts("ACCESSIBILITY ISSUES FOR: #{@options[:url]}")
+				puts("==============================================")
+				get_url_contents(@options[:url])
+				self.methods.each do |method|
+					error_messages << (self.public_send(method)) if method[0..5] == "check_"
+				end
+				puts error_messages
+			else
+				urls = File.readlines(@options[:file])
+				urls.each do |url|
+					error_messages = []
+					puts("==============================================")
+					puts("ACCESSIBILITY ISSUES FOR: #{@options[:url]}")
+					puts("==============================================")
+					get_url_contents(formatted_url(url))
+					self.methods.each do |method|
+						error_messages << (self.public_send(method)) if method[0..5] == "check_"
+					end
+					puts error_messages
+				end
 			end
-
-			puts error_messages
 		end
 
 		def check_image_input_alt(source=@contents)

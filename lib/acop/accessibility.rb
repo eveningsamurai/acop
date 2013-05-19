@@ -1,6 +1,7 @@
 require 'open-uri'
 require 'nokogiri'
 require 'rexml/document'
+require File.dirname(__FILE__) + '/rspec_writer.rb'
 
 module Acop
 
@@ -23,10 +24,11 @@ module Acop
 
 		def accessibility_checks
 			if(@options[:url])
+				#Acop::RSpecWriter.new(url)
 				error_messages = []
-				puts("==============================================")
-				puts("ACCESSIBILITY ISSUES FOR: #{@options[:url]}")
-				puts("==============================================")
+				puts("===============================================")
+				puts("==ACCESSIBILITY ISSUES FOR: #{@options[:url]}==")
+				puts("===============================================")
 				get_url_contents(@options[:url])
 				self.methods.each do |method|
 					error_messages << (self.public_send(method)) if method[0..5] == "check_"
@@ -35,10 +37,11 @@ module Acop
 			else
 				urls = File.readlines(@options[:file])
 				urls.each do |url|
+					#Acop::RSpecWriter.new(url)
 					error_messages = []
-					puts("==============================================")
-					puts("ACCESSIBILITY ISSUES FOR: #{url}")
-					puts("==============================================")
+					puts("===============================================")
+					puts("==ACCESSIBILITY ISSUES FOR: #{url}==")
+					puts("===============================================")
 					get_url_contents(formatted_url(url))
 					self.methods.each do |method|
 						error_messages << (self.public_send(method)) if method[0..5] == "check_"

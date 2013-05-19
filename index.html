@@ -57,6 +57,14 @@
 
 <p><code>acop -u http://www.google.com</code></p>
 
+<p>Specify the urls to be tested in a file (new line separated)</p>
+
+<p><code>acop -f ./list_of_urls.txt</code></p>
+
+<p>Scaffold rspec tests for a particular url or list of urls in a file. The gem will create a spec directory(if none exists) from where it is run. In addition it will create a spec file with a describe block for a particular url or list of urls. If the spec file being used already exists, the gem will append to the file.</p>
+
+<p><code>acop -u www.google.com -g rspec</code><br><code>acop -f list_of_urls -g rspec</code></p>
+
 <h2>Checkpoints</h2>
 
 <h3>Standard Web Programming</h3>

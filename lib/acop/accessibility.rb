@@ -14,6 +14,7 @@ module Acop
 		end
 
 		def get_url_contents(url)
+			url = URI.parse(url)
 			@source = open(url)
 			@contents = Nokogiri::HTML(@source)
 		end
@@ -24,11 +25,12 @@ module Acop
 
 		def accessibility_checks
 			if(@options[:url])
-				#Acop::RSpecWriter.new(url)
+				Acop::RSpecWriter.new(options[:url]) if(options[:tests]=='rspec')
 				error_messages = []
-				puts("===============================================")
-				puts("==ACCESSIBILITY ISSUES FOR: #{@options[:url]}==")
-				puts("===============================================")
+				length = 30 + @options[:url].length
+				puts "="*length
+				puts("==ACCESSIBILITY ISSUES FOR: #{@options[:url].chomp}==")
+				puts "="*length
 				get_url_contents(@options[:url])
 				self.methods.each do |method|
 					error_messages << (self.public_send(method)) if method[0..5] == "check_"
@@ -37,10 +39,10 @@ module Acop
 			else
 				urls = File.readlines(@options[:file])
 				urls.each do |url|
-					#Acop::RSpecWriter.new(url)
+					Acop::RSpecWriter.new(url) if(options[:tests]=='rspec')
 					error_messages = []
 					puts("===============================================")
-					puts("==ACCESSIBILITY ISSUES FOR: #{url}==")
+					puts("==ACCESSIBILITY ISSUES FOR: #{url.chomp}==")
 					puts("===============================================")
 					get_url_contents(formatted_url(url))
 					self.methods.each do |method|
@@ -121,7 +123,8 @@ module Acop
 			iframe_elements = source.css("iframe")
 			error_messages = []
 			if(frame_elements.length > 0 or iframe_elements.length > 0)
-				doctype = REXML::Document.new(@source.string).doctype
+				puts @source.readlines.first
+				doctype = REXML::Document.new(@source.readlines.first).doctype
 				error_messages.push("Frames/iFrames present but doctype is missing") unless doctype
 			end
 			error_messages

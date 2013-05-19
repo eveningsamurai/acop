@@ -1,15 +1,12 @@
 module Acop
-
 	class RSpecWriter
 		attr_writer :file
 		attr_reader :url
 
 		def initialize(url)
 			@url = url
-			unless(File.exists?("./spec"))
-				Dir.mkdir("./spec")
-			end
-			if(File.exists?("./spec/acop_spec.rb")
+			Dir.mkdir("./spec") unless File.exists?("./spec")
+			if File.exists?("./spec/acop_spec.rb")
 				@file = File.open("./spec/acop_accessibility_spec.rb", 'a')
 				append_file(@url)
 			else
@@ -33,13 +30,16 @@ module Acop
 		end
 
 		def write_rspec(url)
-			@file.puts "describe '#{url}' do"
+			@file.puts "describe '#{url.chomp}' do"
 			@file.puts "  it 'should pass accessibility tests' do"
-			@file.puts "    output = `acop #{url}`"
-			@file.puts "    output = output.split('\n').reject! {|line| line[0] == '='}"
+			@file.puts "    output = `acop -u #{url.chomp}`"
+			@file.puts "    output = output.split(\"\\n\").reject! {|line| line[0] == '='}"
+			@file.puts "    puts '== ACCESSIBILITY ISSUES =='"
+			@file.puts "    puts output"
 			@file.puts "    output.should be_empty"
 			@file.puts "  end"
 			@file.puts "end"
+			@file.puts
 		end
 
 		def close_file

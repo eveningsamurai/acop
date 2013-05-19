@@ -35,7 +35,7 @@ Specify the urls to be tested in a file (new line separated)
 
 Scaffold rspec tests for a particular url or list of urls in a file. The gem will create a spec directory(if none exists) from where it is run. In addition it will create a spec file with a describe block for a particular url or list of urls. If the spec file being used already exists, the gem will append to the file.
 
-`acop -u www.google.com -g rspec`
+`acop -u www.google.com -g rspec`   
 `acop -f list_of_urls -g rspec`
 
 Checkpoints

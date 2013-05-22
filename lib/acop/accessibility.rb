@@ -41,9 +41,10 @@ module Acop
 				urls.each do |url|
 					Acop::RSpecWriter.new(url) if(options[:tests]=='rspec')
 					error_messages = []
-					puts("===============================================")
+					length = 30 + url.length
+					puts "="*length
 					puts("==ACCESSIBILITY ISSUES FOR: #{url.chomp}==")
-					puts("===============================================")
+					puts "="*length
 					get_url_contents(formatted_url(url))
 					self.methods.each do |method|
 						error_messages << (self.public_send(method)) if method[0..5] == "check_"

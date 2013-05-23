@@ -83,7 +83,7 @@ module Acop
 			image_links = []
 			link_elements.each do |link_element|
 				if(link_element['alt'] != "")
-					error_messages.push("Line #{link_element.line}: Alt Text not empty or nil for image link with src: " + link_element['src'])
+					error_messages.push("Line #{link_element.line}: Alt Text not empty or nil for image link with src: " + link_element['src']) unless(@ah.attribute_empty_or_nil(link_element.parent, "alt"))
 				end
 			end
 			error_messages
@@ -142,7 +142,7 @@ module Acop
 			hyperlinks = source.css("a")
 			error_messages = []
 			hyperlinks.each do |link|
-				error_messages.push("Line #{link.line}: Missing link text for link with href: #{link['href']}") if(link.text==nil or link.text=="")
+				error_messages.push("Line #{link.line}: Missing link text for link with href: #{link['href']}") if(link.css("img").empty? and (link.text==nil or link.text==""))
 			end
 			hyperlink_text = hyperlinks.collect {|link| link.text.lstrip }
 			duplicate_hyperlink_text = hyperlink_text.select{|link| hyperlink_text.count(link) > 1}.uniq
